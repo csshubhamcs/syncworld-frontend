@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Keycloak Silent Check SSO</title>
+</head>
+<body>
+    <script>
+        // This script is used by Keycloak's JavaScript adapter (keycloak-js)
+        // when performing a silent check-sso or refreshing tokens via an iframe.
+        // The Keycloak adapter, running in the main application window, will load this
+        // page in a hidden iframe. This page, once loaded in the iframe, will
+        // communicate its URL (which contains authentication state information from Keycloak)
+        // back to the Keycloak adapter in the parent window using postMessage.
+        // This allows Keycloak to determine the user's authentication status
+        // or refresh tokens without a full page redirect of the main application.
+
+        // Ensure the parent window (your React app) is the intended recipient.
+        // 'location.origin' of this iframe should match the origin of the parent.
+        if (parent && parent.postMessage) {
+            parent.postMessage(location.href, location.origin);
+        } else {
+            // Fallback or error handling if parent context is not as expected
+            console.error("Cannot post message to parent window from silent-check-sso.html");
+        }
+    </script>
+    Shubham Singh
+</body>
+</html>
